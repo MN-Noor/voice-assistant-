@@ -1,7 +1,7 @@
 from google.cloud import speech_v1p1beta1 as speech
 
 def transcription(file_name):
-    client = speech.SpeechClient()
+    client = speech.SpeechClient.from_service_account_file('key.json')
 
     with open(file_name, 'rb') as f:
         mp3_data = f.read()
@@ -9,7 +9,7 @@ def transcription(file_name):
     audio_file = speech.RecognitionAudio(content=mp3_data)
 
     config = speech.RecognitionConfig(
-        sample_rate_hertz=44100,
+        sample_rate_hertz=48000,
         enable_automatic_punctuation=True,
         language_code='en-US'
     )

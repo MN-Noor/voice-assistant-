@@ -14,7 +14,7 @@ def root():
     return render_template('index.html')
 
 
-@app.route('/save-record', methods=['POST', 'GET'])
+@app.route('/save-record', methods=['POST','GET'])
 def save_record():
     
     if 'file' not in request.files:
@@ -26,9 +26,8 @@ def save_record():
         flash('No selected file')
         return redirect(request.url)
     file_name = str(uuid.uuid4()) + ".mp3"
-    transcript=gsp.transcription(file_name)
-    prompt ="Postgres SQL tables, with their properties:"+transcript
-    Query=generate_sql_query(prompt)
+    print(file_name)
+   
 
     full_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
     file.save(full_file_name)
@@ -37,5 +36,4 @@ def save_record():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    app.run(host="0.0.0.0", port=86)
+    app.run(debug=True, host="0.0.0.0", port=86)
